@@ -14,6 +14,7 @@ license = "MIT"
 
 [target.'cfg(target_os="linux")'.dependencies]
 ksni = "0.2.0"
+uuid = { version = "0.8", features = ["v4"] }
 
 [target.'cfg(target_os="windows")'.dependencies]
 winapi = { version = "0.3", features = ["shellapi", "libloaderapi", "errhandlingapi", "impl-default"] }

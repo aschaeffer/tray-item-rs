@@ -1,4 +1,5 @@
 use tray_item::{IconSource, TrayItem};
+use uuid::Uuid;
 
 fn main() {
     let mut tray = TrayItem::new(
@@ -7,24 +8,32 @@ fn main() {
     )
     .unwrap();
 
-    tray.add_label("Tray Label").unwrap();
+    tray.add_label(Uuid::new_v4(), "Tray Label").unwrap();
 
-    tray.add_menu_item("Hello", || {
+    tray.add_menu_item(Uuid::new_v4(), "Hello", || {
         println!("Hello!");
     })
     .unwrap();
 
-    tray.add_menu_item("Quit", || {
+    tray.add_menu_item(Uuid::new_v4(), "Quit", || {
         std::process::exit(0);
     })
     .unwrap();
 
     std::io::stdin().read_line(&mut String::new()).unwrap();
 
-    tray.add_menu_item("Test", || {
-        std::process::exit(0);
+    let id = Uuid::new_v4();
+    let id2 = id;
+    tray.add_menu_item(id, "Test", move || {
+        println!("Clicked on menu item {}!", id2);
     })
     .unwrap();
+    println!("Added menu item {}!", id);
+
+    std::io::stdin().read_line(&mut String::new()).unwrap();
+
+    tray.remove(id).unwrap();
+    println!("Removed menu item {}!", id);
 
     std::io::stdin().read_line(&mut String::new()).unwrap();
 }
