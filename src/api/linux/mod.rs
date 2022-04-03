@@ -132,3 +132,10 @@ impl TrayItemLinux {
         Ok(())
     }
 }
+
+impl Drop for TrayItemLinux {
+    fn drop(&mut self) {
+        self.tray.shutdown();
+        // self.shutdown();
+    }
+}
